@@ -1,5 +1,5 @@
 #account-page.account-page
-  .account-page__inner--left.account-page__header
+  .account-page__inner.clearfix
     .account-page__inner--left.account-page__header
       %h2 Edit Account
       %h5 アカウントの編集
@@ -11,7 +11,7 @@
           .field-label
             = f.label :name
           .field-input
-            = f.text_field :name, autofocus: %true
+            = f.text_field :name, autofocus: true
         .field
           .field-label
             = f.label :email
