@@ -1,3 +1,4 @@
 .wrapper {
   @include flexbox;
+  overflow: hidden;
 }
