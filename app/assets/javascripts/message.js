@@ -22,6 +22,63 @@ $(document).on('turbolinks:load', function() {
       return html;
     }
 
+
+    var buildMessageHTML = function(message) {
+      if (message.content && message.image.url) {
+        //data-idが反映されるようにしている
+        var html = `<div class="message" data-id= ${ message.id }  >
+                      <div class="upper-message">
+                        <div class="upper-message__user-name">
+                          ${message.user_name}
+                        </div>
+                        <div class="upper-message__date">
+                          ${message.created_at}
+                        </div>
+                      </div>
+                      <div class="lower-message">
+                        <p class="lower-message__content">
+                          ${message.content}
+                        </p>  
+                        <img src="${message.image.url}" class="lower-message__image" >
+                      </div>
+                    </div>`
+      } else if (message.content) {
+        //同様に、data-idが反映されるようにしている
+        var html = `<div class="message" data-id= ${message.id}>
+                      <div class="upper-message">
+                        <div class="upper-message__user-name">
+                          ${message.user_name}
+                        </div>
+                        <div class="upper-message__date">
+                          ${message.created_at}
+                        </div>
+                      </div>
+                      <div class="lower-message">
+                        <p class="lower-message__content">
+                          ${message.content}
+                        </p>
+                      </div>
+                    </div>`
+      } else if (message.image.url) {
+        //同様に、data-idが反映されるようにしている
+        var html = `<div class="message" data-id= ${message.id}>
+                      <div class="upper-message">
+                        <div class="upper-message__user-name">' +
+                          ${message.user_name}
+                        </div>
+                        <div class="upper-message__date">
+                          ${message.created_at}
+                        </div>
+                      </div>
+                      <div class="lower-message">
+                        <img src="${message.image.url}" class="lower-message__image" >
+                      </div>
+                    </div>`
+    };
+    return html;
+  };
+  $(function(){
+    setInterval(update, 10000);
     $("#new_message").on("submit", function(e){
       e.preventDefault();
       var formData = new FormData(this);
@@ -44,5 +101,23 @@ $(document).on('turbolinks:load', function() {
         alert('error')
       })
     });
+
+    var reloadMessages =function() {
+      last_message_id = $(".message:last").data("id")
+      $.ajax({
+        url: "/groups/:group_id/api/messages.json",
+        type: "GET",
+        dataType: 'json',
+        data: {id: last_message_id}
+      })
+      .done(function(messages) {
+        var insertHTML ='';
+
+      })
+      .fail(function() {
+        console.log('error');
+      })
+    }
+  });
   });
 });
