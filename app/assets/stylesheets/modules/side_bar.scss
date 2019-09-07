@@ -29,16 +29,24 @@
     background-color: $side_blue_light;
     height: calc(100vh - 100px);
     padding: 0 20px;
+    overflow: scroll;
+    width: 260px;
     .group {
       box-sizing: border-box;
       padding: 20px 0 40px;
-      &__name {
-        font-size: $side_group_name;
+      &__list{
+        text-decoration: none;
       }
-      &__message {
-        font-size: $side_group_message;
-        margin-top: 5px;
-      }
+        &__name {
+          font-size: $side_group_name;
+          color: $white;
+        }
+        &__message {
+          font-size: $side_group_message;
+          margin-top: 5px;
+          color: $white;
+        }
     }
   }
 }
+

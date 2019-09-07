@@ -4,8 +4,6 @@
     box-sizing: border-box;
     height: 100px;
     padding: 0 40px;
-    
-
     .left-header {
       float: left;
       &__title {
@@ -14,7 +12,7 @@
         margin-top: 35px;
       }
       &__members {
-        color: #999;
+        color: $light_gray;
         display: flex;
         font-size: 12px;
         margin-top: 15px;
@@ -33,6 +31,10 @@
       line-height: 40px;
       margin-top: 28px;
       padding: 0 20px;
+        .EditLink{
+          text-decoration: none;
+          color: $light_blue;
+        }
     }
   }
 
@@ -40,18 +42,19 @@
     background-color: #FAFAFA;
     box-sizing: border-box;
     padding: 46px 40px 0;
-    height: calc(100% - 100px - 90px);
+    height: calc(100vh - 100px - 90px);
     border-top: 1px solid #eeeeee;
+    overflow-y: scroll;
     .message {
       .upper-message {
         display: flex;
         &__user-name {
-          color: #434a54;
+          color: $black;
           font-size: 16px;
           font-weight: bold;
         }
         &__date {
-          color: #999;
+          color: $light_gray;
           font-size: 12px;
           padding-left: 10px;
         }
