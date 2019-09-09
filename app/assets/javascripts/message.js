@@ -2,8 +2,9 @@ $(document).on('turbolinks:load', function() {
   $(function(){
     
     function buildHTML(message){
-      var img = message.image ? `<img src= ${ message.image }>` : '';
-      var html = `<div class="message" data-message-id="${message.id}">
+      var img = '';
+      img = message.image ? `<img src= ${ message.image }>` : '';
+      var html = `<div class="message" data-id="${message.id}">
                     <div class="upper-message">
                       <div class="upper-message__user-name">
                         ${message.user_name}
@@ -16,9 +17,7 @@ $(document).on('turbolinks:load', function() {
                       <p class="lower-message__content">
                         ${message.content}
                       </p>
-                      <p>
                         ${img}
-                      </p>
                     </div>
                   </div>`
       return html;
@@ -31,8 +30,8 @@ $(document).on('turbolinks:load', function() {
     $(function(){
       $("#new_message").on("submit", function(e){
         e.preventDefault();
-        var formData = new FormData(this);
-        var url = (window.location.href);
+        var formData = new FormData($(this).get(0));
+        var url = $(this).attr('action')
         $.ajax({
           url: url,
           type: "POST",
@@ -54,12 +53,14 @@ $(document).on('turbolinks:load', function() {
     });
   
     
-        
+    $(function(){
+      setInterval(reloadMessages, 5000);
+    });
         
       
       var reloadMessages = function () {
         if(window.location.href.match(/\/groups\/\d+\/messages/)){
-          var last_message_id = $(".message:last").data("id")
+          var last_message_id = $('.message:last').data('id')
           $.ajax({
             url: "api/messages",
             type: "GET",
@@ -68,19 +69,20 @@ $(document).on('turbolinks:load', function() {
           })
           .done(function(messages) {
             var insertHTML = "";
-            messages.forEach(function(message){
-              insertHTML = buildHTML(message)
-              $(".messages").append(insertHTML)
+            messages.forEach(function (message){
+              insertHTML = buildHTML(message);
+              $('.messages').append(insertHTML);
             })
-    
-            $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 'fast');
-    
+            $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight}, 'fast');
           })
+          
           .fail(function() {
             alert('error');
           })
+        } else {
+          clearInterval(interval)
         }
     }
-    setInterval(reloadMessages, 5000);
+    
   });
 });
