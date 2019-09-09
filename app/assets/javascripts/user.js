@@ -18,7 +18,7 @@ $(document).on('turbolinks:load', function() {
 
     var member_list = $("#chat-group-users");
 
-    function addUser(userId,userName) {
+    function removeUser(userId,userName) {
     var html = `<div id='chat-group-users'>
                   <div class='chat-group-user clearfix js-chat-member' id='${userId}'>
                     <input name='group[user_ids][]' type='hidden' value='${userId}'>
@@ -34,9 +34,7 @@ $(document).on('turbolinks:load', function() {
       $.ajax({
         type: "GET",
         url: "/users",
-        data: {
-          keyword: input
-        },
+        data: { keyword: input },
         dataType: "json"
       })
       .done(function(users){
@@ -58,7 +56,7 @@ $(document).on('turbolinks:load', function() {
       $('#chat-group-users').val();
         var userId = $(this).data('user-id');
         var userName = $(this).data('user-name');
-        addUser(userId,userName);
+        removeUser(userId,userName);
         $(this).parent().remove();
     });
 
